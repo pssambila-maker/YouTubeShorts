@@ -66,12 +66,23 @@ ANTHROPIC_API_KEY=your_actual_api_key_here
 ## Usage
 
 ### Basic Usage
+
+**With GUI File Picker:**
+```bash
+python main.py
+```
+Just run without arguments and a file picker window will open!
+
+**With Command Line:**
 ```bash
 python main.py path/to/your/video.mp4
 ```
 
 ### Advanced Options
 ```bash
+# Use GUI file picker with options
+python main.py --max-clips 3 --skip-cutting
+
 # Generate only 3 clips
 python main.py video.mp4 --max-clips 3
 

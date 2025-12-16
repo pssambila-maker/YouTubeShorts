@@ -8,6 +8,8 @@ for creating YouTube Shorts using AI (Whisper + Claude).
 import argparse
 import os
 import sys
+import tkinter as tk
+from tkinter import filedialog
 from config import (
     get_api_key,
     create_output_dirs,
@@ -50,6 +52,32 @@ def check_dependencies():
         print("  1. Install FFmpeg: https://ffmpeg.org/download.html")
         print("  2. Create a .env file with: ANTHROPIC_API_KEY=your_key_here")
         sys.exit(1)
+
+
+def select_video_file():
+    """
+    Open a GUI file picker to select a video file.
+
+    Returns:
+        str: Path to selected video file, or None if cancelled
+    """
+    # Hide the main tkinter window
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes('-topmost', True)
+
+    # Open file dialog
+    file_path = filedialog.askopenfilename(
+        title="Select a video file",
+        filetypes=[
+            ("Video files", "*.mp4 *.mov *.avi *.mkv *.flv *.wmv *.webm"),
+            ("MP4 files", "*.mp4"),
+            ("All files", "*.*")
+        ]
+    )
+
+    root.destroy()
+    return file_path if file_path else None
 
 
 def run_pipeline(video_path: str, args):
@@ -136,6 +164,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
+  python main.py                      (opens GUI file picker)
   python main.py video.mp4
   python main.py video.mp4 --max-clips 3 --skip-cutting
   python main.py video.mp4 --whisper-model medium --max-duration 45
@@ -147,7 +176,8 @@ For more information, see README.md
 
     parser.add_argument(
         'video_path',
-        help='Path to the video file to process'
+        nargs='?',  # Make video_path optional
+        help='Path to the video file to process (or leave empty to use GUI file picker)'
     )
 
     parser.add_argument(
@@ -190,9 +220,19 @@ For more information, see README.md
     create_output_dirs()
     check_dependencies()
 
+    # Get video path - use GUI file picker if not provided
+    video_path = args.video_path
+    if not video_path:
+        print("No video path provided. Opening file picker...")
+        video_path = select_video_file()
+        if not video_path:
+            print("❌ No file selected. Exiting.")
+            sys.exit(1)
+        print(f"Selected: {video_path}\n")
+
     # Run pipeline
     try:
-        run_pipeline(args.video_path, args)
+        run_pipeline(video_path, args)
     except KeyboardInterrupt:
         print("\n\n⚠ Interrupted by user")
         sys.exit(1)
