@@ -1,0 +1,14 @@
+.env
+output/
+*.pyc
+__pycache__/
+*.wav
+*.mp4
+*.mp3
+.DS_Store
+*.json
+*.txt
+!requirements.txt
+!IMPLEMENTATION_PLAN.md
+!README.md
+!Prompt_Ytube_shorts.txt

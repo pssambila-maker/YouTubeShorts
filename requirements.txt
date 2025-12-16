@@ -1,0 +1,4 @@
+openai-whisper
+anthropic
+ffmpeg-python
+python-dotenv

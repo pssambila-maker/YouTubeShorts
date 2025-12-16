@@ -1,0 +1,39 @@
+You are an expert full‑stack engineer and architect. Your job is to design a complete, simple plan for an offline/local MVP app similar to Nexusclips, but running on my own computer.
+New scope and constraints:
+* I already have long‑form video files stored locally on my computer.
+* I do NOT need Firebase, user auth, or hosting.
+* I want a simple app ( minimal GUI) that:
+   1. Lets me choose a local video file.
+   2. Analyzes it (using transcription + an AI model) to find the best highlight moments.
+   3. Outputs a list of suggested clips with start/end timestamps, titles, and caption text that I can later upload to YouTube as Shorts.
+* Optional “nice to have”: use FFmpeg or similar to actually cut the video into separate clip files on disk.
+* I will use Visual Studio / VS Code as my IDE.
+* I will use Claude Code to generate and edit all code.
+* I am OK with a Node.js or Python implementation; pick one and stick with it.
+Please produce a clear, 8th‑grade‑friendly implementation plan that I can hand directly to Claude Code.
+1. Define the MVP scope: exactly what this local app WILL do and what it will NOT do in version 1.
+2. Propose the tech stack and folder structure for a small project that lives on my machine (no cloud backend).
+3. Explain how the app should work end‑to‑end for a single video file:
+   * how the user selects or specifies the video path
+   * how the audio is extracted (e.g., with FFmpeg)
+   * how transcription is done (e.g., Whisper or another local/hosted ASR)
+   * how an AI model (like Claude) scores and selects highlight segments
+   * how suggested clips (timestamps + titles + captions) are saved (e.g., JSON file, CSV, or text report).
+4. Describe how to optionally integrate FFmpeg so the app can actually cut the suggested clips into short MP4 files in an `output_clips/` folder.
+5. Specify a simple user interface:
+   * Either a command‑line interface (CLI) where I run `node index.js path/to/video.mp4` or `python main.py ...`,
+   * OR a very simple local GUI (you choose which is easier for an MVP).
+6. Define the main modules / files and what each one does (for example: `transcribeVideo`, `findHighlights`, `exportClipsReport`, `cutClipsWithFfmpeg`).
+7. Write a “task list for Claude Code” that I can paste into Claude Code as instructions. The tasks should be ordered and small, for example:
+   * Initialize the project with a basic `package.json` (or `requirements.txt`) and install dependencies.
+   * Add a CLI entry file that accepts a video path argument.
+   * Implement a helper to call FFmpeg to extract audio.
+   * Implement a transcription function (you can mock the ASR in v1 if needed).
+   * Implement a highlight‑selection function that takes transcript text and returns clip suggestions.
+   * Implement saving a `clips_report.json` and `clips_report.txt` to disk.
+   * (Optional) Implement actual video cutting with FFmpeg into `./output_clips`.
+8. For each task, include:
+   * which files Claude Code should create or edit
+   * what functions it should implement and what inputs/outputs they have
+   * any assumptions, TODOs, or placeholders (for example, “later replace this mock transcript with a real ASR call”).
+Use clear headings and bullet points. Assume I know basic JavaScript/Python but want instructions simple enough that an 8th‑grade student could follow them step by step.
