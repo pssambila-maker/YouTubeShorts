@@ -5,13 +5,20 @@ Automatically find and extract the best moments from long videos to create YouTu
 ## What It Does
 
 1. **Analyzes** your long-form videos using AI (Whisper + Claude)
-2. **Identifies** 3-5 highlight moments perfect for YouTube Shorts (15-60 seconds)
-3. **Generates** complete YouTube content for each clip:
+2. **Generates** professional YouTube metadata for the **full video**:
+   - SEO-optimized title
+   - Complete description with keywords and hashtags
+   - 15-20 relevant tags
+   - Thumbnail text suggestions
+   - Category recommendations
+   - Key moments/chapters with timestamps
+3. **Identifies** 3-5 highlight moments perfect for YouTube Shorts (15-60 seconds)
+4. **Generates** complete YouTube content for **each clip**:
    - Catchy titles
    - Attention-grabbing hooks
    - Full descriptions with hashtags
    - Thumbnail text suggestions
-4. **Optionally cuts** the video into separate clip files ready to upload
+5. **Optionally cuts** the video into separate clip files ready to upload
 
 ## Requirements
 

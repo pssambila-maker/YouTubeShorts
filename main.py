@@ -24,6 +24,7 @@ from src.transcriber import transcribe_audio, save_transcript
 from src.highlight_analyzer import analyze_highlights
 from src.report_generator import generate_json_report, generate_text_report
 from src.clip_generator import generate_all_clips
+from src.video_metadata_generator import generate_video_metadata
 
 
 def check_dependencies():
@@ -114,7 +115,14 @@ def run_pipeline(video_path: str, args):
     save_transcript(transcript, transcript_path)
     print("✓ Transcription complete")
 
-    # Step 3: Analyze highlights
+    # Step 3A: Generate full video metadata
+    print(f"\n⏳ Generating full video metadata with Claude AI...")
+    video_metadata = generate_video_metadata(transcript, video_name)
+    print(f"✓ Video metadata generated")
+    print(f"   Title: {video_metadata['title']}")
+    print(f"   Category: {video_metadata['category']}")
+
+    # Step 3B: Analyze highlights
     print(f"\n⏳ Analyzing highlights with Claude AI...")
     clips = analyze_highlights(
         transcript,
@@ -141,11 +149,40 @@ def run_pipeline(video_path: str, args):
 
     # Step 4: Generate reports
     print("\n⏳ Generating reports...")
+
+    # Save video metadata
+    import json as json_module
+    metadata_json_path = os.path.join(OUTPUT_DIRS['reports'], f"{video_name}_metadata.json")
+    with open(metadata_json_path, 'w', encoding='utf-8') as f:
+        json_module.dump(video_metadata, f, indent=2, ensure_ascii=False)
+
+    # Create human-readable metadata report
+    metadata_txt_path = os.path.join(OUTPUT_DIRS['reports'], f"{video_name}_metadata.txt")
+    with open(metadata_txt_path, 'w', encoding='utf-8') as f:
+        f.write("=" * 70 + "\n")
+        f.write("FULL VIDEO YOUTUBE METADATA\n")
+        f.write("=" * 70 + "\n\n")
+        f.write(f"TITLE:\n{video_metadata['title']}\n\n")
+        f.write(f"DESCRIPTION:\n{video_metadata['description']}\n\n")
+        f.write(f"TAGS:\n{', '.join(video_metadata['tags'])}\n\n")
+        f.write(f"THUMBNAIL TEXT:\n{video_metadata['thumbnail_text']}\n\n")
+        f.write(f"CATEGORY:\n{video_metadata['category']}\n\n")
+        f.write("KEY MOMENTS / CHAPTERS:\n")
+        for moment in video_metadata.get('key_moments', []):
+            f.write(f"  {moment['timestamp']} - {moment['description']}\n")
+        f.write("\n" + "=" * 70 + "\n")
+
+    # Save clips reports
     json_path = generate_json_report(clips, video_path, OUTPUT_DIRS['reports'])
     txt_path = generate_text_report(clips, video_path, OUTPUT_DIRS['reports'])
+
     print(f"✓ Reports saved:")
-    print(f"  - {json_path}")
-    print(f"  - {txt_path}")
+    print(f"  Full Video Metadata:")
+    print(f"    - {metadata_json_path}")
+    print(f"    - {metadata_txt_path}")
+    print(f"  Clips Reports:")
+    print(f"    - {json_path}")
+    print(f"    - {txt_path}")
 
     # Step 5: Cut clips (optional)
     if not args.skip_cutting:
