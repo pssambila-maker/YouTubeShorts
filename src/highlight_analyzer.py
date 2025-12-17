@@ -33,7 +33,7 @@ def build_analysis_prompt(transcript: dict, max_clips: int, min_duration: int, m
 
     segments_text = "\n".join(formatted_segments)
 
-    prompt = f"""You are an expert YouTube Shorts creator. Analyze this video transcript and identify the {max_clips} BEST moments to turn into viral YouTube Shorts (15-60 second clips).
+    prompt = f"""You are an expert YouTube Shorts creator and copywriter. Analyze this video transcript and identify the {max_clips} BEST moments to turn into viral YouTube Shorts (15-60 second clips).
 
 TRANSCRIPT:
 {segments_text}
@@ -48,17 +48,26 @@ CRITERIA FOR GREAT SHORTS:
 For each suggested clip, provide:
 1. start_time (in seconds, from the timestamps above)
 2. end_time (in seconds)
-3. title (catchy, 5-8 words)
-4. caption (engaging hook for the clip, 10-20 words)
-5. reason (why this moment works as a Short)
+3. title (catchy YouTube title, 5-8 words, capitalize key words)
+4. hook (attention-grabbing opening line, 5-10 words, creates curiosity)
+5. description (full YouTube Shorts description, 2-3 sentences, include relevant hashtags)
+6. thumbnail_text (bold text for thumbnail overlay, 2-4 words, ALL CAPS if impactful)
+7. reason (why this moment works as a Short)
+
+EXAMPLES OF GOOD OUTPUTS:
+- hook: "Wait until you see what happens next..."
+- description: "The most unexpected moment from today's session! This is why you should never assume anything. #Shorts #Viral #Unexpected"
+- thumbnail_text: "NO WAY!"
 
 Return your response as a JSON array ONLY (no other text):
 [
   {{
     "start_time": 45.2,
     "end_time": 72.1,
-    "title": "Epic Fail Moment",
-    "caption": "You won't believe what happens next when he tries this trick!",
+    "title": "Epic Fail Moment Caught On Camera",
+    "hook": "You won't believe this happened...",
+    "description": "The most epic fail you'll see today! Watch what happens when confidence meets reality. This is pure comedy gold! #Shorts #EpicFail #Funny #Viral",
+    "thumbnail_text": "EPIC FAIL",
     "reason": "High energy moment with visual payoff and standalone story"
   }}
 ]"""
@@ -82,7 +91,8 @@ def analyze_highlights(
         max_duration: Maximum clip length in seconds
 
     Returns:
-        List of clip dicts with start_time, end_time, title, caption, reason
+        List of clip dicts with start_time, end_time, title, hook, description,
+        thumbnail_text, reason
 
     Raises:
         Exception: If Claude API call fails

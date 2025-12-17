@@ -6,7 +6,11 @@ Automatically find and extract the best moments from long videos to create YouTu
 
 1. **Analyzes** your long-form videos using AI (Whisper + Claude)
 2. **Identifies** 3-5 highlight moments perfect for YouTube Shorts (15-60 seconds)
-3. **Generates** reports with timestamps, titles, and captions
+3. **Generates** complete YouTube content for each clip:
+   - Catchy titles
+   - Attention-grabbing hooks
+   - Full descriptions with hashtags
+   - Thumbnail text suggestions
 4. **Optionally cuts** the video into separate clip files ready to upload
 
 ## Requirements
@@ -148,21 +152,25 @@ output/
 SUGGESTED CLIPS:
 ==================================================
 
-  1. "Mind-Blowing Revelation"
-     Time: 45.2s - 72.1s (27s)
-     You won't believe what happens when he explains this concept!
+  1. "Mind-Blowing Revelation About Success"
+     Time: 00:45 - 01:12 (27s)
+     Hook: Wait until you hear what he says about this...
+     Thumbnail: MIND BLOWN
 
-  2. "Hilarious Story"
-     Time: 203.5s - 231.8s (28s)
-     The funniest moment from the entire conversation!
+  2. "Hilarious Comeback Story"
+     Time: 03:23 - 03:51 (28s)
+     Hook: You won't believe how this story ends!
+     Thumbnail: NO WAY!
 
-  3. "Key Takeaway"
-     Time: 512.3s - 552.7s (40s)
-     This one insight will change how you think about productivity!
+  3. "The One Productivity Secret That Changed Everything"
+     Time: 08:32 - 09:12 (40s)
+     Hook: This simple trick will transform your life...
+     Thumbnail: GAME CHANGER
 
-  4. "Epic Conclusion"
-     Time: 890.1s - 925.4s (35s)
-     The perfect ending that ties everything together!
+  4. "Epic Conclusion That Ties It All Together"
+     Time: 14:50 - 15:25 (35s)
+     Hook: The perfect ending you didn't see coming...
+     Thumbnail: MUST WATCH
 
 ⏳ Generating reports...
 ✓ Reports saved

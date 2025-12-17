@@ -136,7 +136,8 @@ def run_pipeline(video_path: str, args):
         end_sec = int(clip['end_time'] % 60)
         print(f"\n  {i}. \"{clip['title']}\"")
         print(f"     Time: {start_min:02d}:{start_sec:02d} - {end_min:02d}:{end_sec:02d} ({duration:.0f}s)")
-        print(f"     {clip['caption']}")
+        print(f"     Hook: {clip.get('hook', clip.get('caption', 'N/A'))}")
+        print(f"     Thumbnail: {clip.get('thumbnail_text', 'N/A')}")
 
     # Step 4: Generate reports
     print("\n⏳ Generating reports...")

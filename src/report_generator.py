@@ -82,8 +82,12 @@ def generate_text_report(clips: list, video_path: str, output_dir: str) -> str:
         lines.extend([
             f"CLIP {i}: {clip['title']}",
             f"Time: {format_duration(clip['start_time'])} - {format_duration(clip['end_time'])} ({duration:.0f} seconds)",
-            f"Caption: {clip['caption']}",
-            f"Reason: {clip['reason']}",
+            f"",
+            f"Hook: {clip.get('hook', clip.get('caption', 'N/A'))}",
+            f"Description: {clip.get('description', 'N/A')}",
+            f"Thumbnail Text: {clip.get('thumbnail_text', 'N/A')}",
+            f"",
+            f"Why this works: {clip['reason']}",
             "-" * 70,
             ""
         ])
