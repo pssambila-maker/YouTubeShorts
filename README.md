@@ -84,6 +84,9 @@ python main.py path/to/your/video.mp4
 
 ### Advanced Options
 ```bash
+# Create vertical 9:16 clips for phone screens (recommended for music videos!)
+python main.py video.mp4 --vertical
+
 # Use GUI file picker with options
 python main.py --max-clips 3 --skip-cutting
 
@@ -99,8 +102,8 @@ python main.py video.mp4 --skip-cutting
 # Custom clip duration constraints
 python main.py video.mp4 --min-duration 20 --max-duration 45
 
-# Combine options
-python main.py video.mp4 --max-clips 3 --whisper-model medium --max-duration 50
+# Perfect for music videos: vertical format with 3 clips
+python main.py music_video.mp4 --vertical --max-clips 3 --max-duration 30
 ```
 
 ### Command-Line Options
@@ -111,7 +114,39 @@ python main.py video.mp4 --max-clips 3 --whisper-model medium --max-duration 50
 | `--min-duration` | Minimum clip length in seconds | 15 |
 | `--max-duration` | Maximum clip length in seconds | 60 |
 | `--whisper-model` | Whisper model size: tiny, small, medium, large | small |
+| `--vertical` | Convert clips to vertical 9:16 format (1080x1920) with blurred background | False |
 | `--skip-cutting` | Only generate reports, don't cut videos | False |
+
+### Vertical Format (9:16 for Phones)
+
+The `--vertical` flag converts your horizontal videos into vertical 9:16 format (1080x1920 pixels) perfect for:
+- YouTube Shorts
+- TikTok
+- Instagram Reels
+- Facebook Reels
+
+**How it works:**
+- Original video is centered in the frame
+- Blurred version of the video fills the top and bottom (Instagram/TikTok style)
+- No content is cropped - full video remains visible
+- Output resolution: 1080x1920 (optimized for mobile)
+
+**Perfect for:**
+- Music videos (keeps full frame visible)
+- Landscape videos with important action across the frame
+- Content that looks better with context around it
+
+**Example:**
+```
+Horizontal 16:9 video → Vertical 9:16 with blur bars
+┌─────────────────┐      ┌───────┐
+│                 │      │ blur  │
+│   your video    │  →   │┌─────┐│
+│                 │      ││video││
+└─────────────────┘      │└─────┘│
+                         │ blur  │
+                         └───────┘
+```
 
 ## Output
 

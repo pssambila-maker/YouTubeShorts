@@ -149,8 +149,9 @@ def run_pipeline(video_path: str, args):
 
     # Step 5: Cut clips (optional)
     if not args.skip_cutting:
-        clip_paths = generate_all_clips(video_path, clips, OUTPUT_DIRS['clips'])
-        print(f"\n✓ {len(clip_paths)} clips saved to {OUTPUT_DIRS['clips']}/")
+        clip_paths = generate_all_clips(video_path, clips, OUTPUT_DIRS['clips'], vertical=args.vertical)
+        format_info = " (vertical 9:16)" if args.vertical else ""
+        print(f"\n✓ {len(clip_paths)} clips saved to {OUTPUT_DIRS['clips']}/{format_info}")
     else:
         print("\n⏭  Skipped video cutting (--skip-cutting flag)")
 
@@ -167,8 +168,9 @@ def main():
 Examples:
   python main.py                      (opens GUI file picker)
   python main.py video.mp4
+  python main.py video.mp4 --vertical (creates vertical 9:16 clips for phones)
   python main.py video.mp4 --max-clips 3 --skip-cutting
-  python main.py video.mp4 --whisper-model medium --max-duration 45
+  python main.py video.mp4 --whisper-model medium --max-duration 45 --vertical
   python main.py "path/with spaces/video.mp4" --max-clips 5
 
 For more information, see README.md
@@ -213,6 +215,12 @@ For more information, see README.md
         '--skip-cutting',
         action='store_true',
         help='Skip video cutting, only generate reports'
+    )
+
+    parser.add_argument(
+        '--vertical',
+        action='store_true',
+        help='Convert clips to vertical 9:16 format (1080x1920) with blurred background for phone screens'
     )
 
     args = parser.parse_args()
