@@ -47,6 +47,9 @@ def cut_clip(
             '-crf', '23',
             '-c:a', 'aac',
             '-b:a', '128k',
+            '-ar', '48000',  # 48kHz sample rate (standard for video)
+            '-ac', '2',  # Stereo audio
+            '-movflags', '+faststart',  # Enable streaming/web playback
             '-y',
             output_path
         ]
@@ -84,6 +87,10 @@ def cut_clip(
                 '-t', str(duration),
                 '-c:v', 'libx264',
                 '-c:a', 'aac',
+                '-b:a', '128k',
+                '-ar', '48000',  # 48kHz sample rate
+                '-ac', '2',  # Stereo audio
+                '-movflags', '+faststart',  # Enable web playback
                 '-y',
                 output_path
             ]
